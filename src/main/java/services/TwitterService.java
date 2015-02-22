@@ -1,5 +1,6 @@
 package services;
 
+import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
@@ -88,7 +89,7 @@ public class TwitterService {
 		}
 		
 		try {
-			tweetStatus = twitter.updateStatus("Test message from Gautham Hari's heroku app 'twitterloop'. Your OAuthToken has been saved."
+			tweetStatus = twitter.updateStatus("Registration message from Gautham Hari's heroku app 'twitterloop'. Your OAuthToken has been saved."
 					+ System.currentTimeMillis());
 		} catch (TwitterException e) {
 			e.printStackTrace();
@@ -128,6 +129,44 @@ public class TwitterService {
 		if (tweetStatus != null)
 			return "Please check your Twitter, your tweet has been posted: "
 					+ tweetStatus.getText();
+		else
+			return "BOO! didn't work";
+	}
+	
+	@GET
+	@Path("/post")
+	@Produces(MediaType.APPLICATION_JSON)
+	public String postGroupMessage() {
+		Twitter twitter = new TwitterFactory().getInstance();
+		Status tweetStatus = null;
+		AccessToken accessToken = null;
+		ArrayList<String> temp = new ArrayList<String>();
+		try {
+			twitter.setOAuthConsumer(consumerKey, consumerSecret);
+		} catch (Exception e) {
+			System.out.println("The OAuthConsumer has likely already been set");
+		}
+		try {
+			DB db = new DB();
+			temp = db.getUsernames();
+		}
+		catch (Exception e1) {
+			e1.printStackTrace();
+		}
+		for (String user : temp)
+		{
+			DB db = new DB();
+			accessToken = db.getOAuthToken(user, "twitter");
+			twitter.setOAuthAccessToken(accessToken); 
+			try {
+				tweetStatus = twitter.updateStatus("Group message from Gautham Hari's Heroku app 'twitterloop' "
+					+ System.currentTimeMillis());
+			} catch (TwitterException e) {
+				e.printStackTrace();
+			}
+		}
+		if (tweetStatus != null)
+			return "The group message has been posted to all twitter accounts";
 		else
 			return "BOO! didn't work";
 	}
