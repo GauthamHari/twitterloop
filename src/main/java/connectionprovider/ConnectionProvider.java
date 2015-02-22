@@ -34,9 +34,12 @@ public class ConnectionProvider {
 		try {
 			Connection connection = getConnection();
 			Statement stmt = connection.createStatement();
-			ResultSet rs = stmt.executeQuery("SELECT username FROM tokens");
+			ResultSet rs = stmt.executeQuery("SELECT * FROM tokens");
 			while (rs.next()) {
-				System.out.println("Username: " + rs.getString("username"));
+				System.out.println("\nUsername: " + rs.getString("username"));
+				System.out.println("Application: " + rs.getString("application"));
+				System.out.println("Secret: " + rs.getString("secret"));
+				System.out.println("Oauth: " + rs.getString("oauth"));
 			}
 		} catch (URISyntaxException e) {
 			e.printStackTrace();
