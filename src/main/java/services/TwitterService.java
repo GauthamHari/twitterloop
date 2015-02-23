@@ -89,8 +89,8 @@ public class TwitterService {
 		}
 		
 		try {
-			tweetStatus = twitter.updateStatus("Registration message from Gautham Hari's heroku app 'twitterloop'." 
-					+ " Your OAuthToken has been saved." + System.currentTimeMillis());
+			tweetStatus = twitter.updateStatus("Registration message from Gautham Hari's heroku app 'twitterloop'. Your OAuthToken has been saved."
+					+ System.currentTimeMillis());
 		} catch (TwitterException e) {
 			e.printStackTrace();
 		}
@@ -121,7 +121,7 @@ public class TwitterService {
 			e1.printStackTrace();
 		}
 		try {
-			tweetStatus = twitter.updateStatus("Status Update Message from Gautham Hari's Heroku app 'twitterloop' "
+			tweetStatus = twitter.updateStatus("Status Update from Gautham Hari's Heroku app 'twitterloop' "
 					+ System.currentTimeMillis());
 		} catch (TwitterException e) {
 			e.printStackTrace();
@@ -171,4 +171,3 @@ public class TwitterService {
 			return "BOO! didn't work";
 	}
 }
-
