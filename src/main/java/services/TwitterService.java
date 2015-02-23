@@ -156,6 +156,7 @@ public class TwitterService {
 		for (String user : temp)
 		{
 			DB db = new DB();
+			accessToken = null;
 			accessToken = db.getOAuthToken(user, "twitter");
 			twitter.setOAuthAccessToken(accessToken); 
 			try {
